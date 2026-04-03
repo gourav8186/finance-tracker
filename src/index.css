@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Urbanist:wght@100..900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+    --font-display: "Urbanist", sans-serif;
+
+    --color-background: #f5f7fa;
+    --color-foreground: #1f2937;
+
+    --color-card: #ffffff;
+    --color-card-foreground: #1f2937;
+
+    --color-popover: #ffffff;
+    --color-popover-foreground: #1f2937;
+
+    --color-primary: #4f46e5;
+    --color-primary-foreground: #ffffff;
+
+    --color-secondary: #e5e7eb;
+    --color-secondary-foreground: #1f2937;
+
+    --color-muted: #e5e7eb;
+    --color-muted-foreground: #6b7280;
+
+    --color-accent: #10b981;
+    --color-accent-foreground: #ffffff;
+
+    --color-destructive: #ef4444;
+    --color-destructive-foreground: #ffffff;
+
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+
+    --color-income: #31C48D;
+    --color-expense: #E55353;
+
+    --color-border: #e5e7eb;
+
+    --radius: 0.75rem;
+}
+
+/* DARK MODE */
+.dark {
+    --color-background: #0b1220;
+    --color-foreground: #e5e7eb;
+
+    --color-card: #111827;
+    --color-card-foreground: #e5e7eb;
+
+    --color-popover: #111827;
+    --color-popover-foreground: #e5e7eb;
+
+    --color-primary: #6366f1;
+    --color-primary-foreground: #ffffff;
+
+    --color-secondary: #1f2937;
+    --color-secondary-foreground: #e5e7eb;
+
+    --color-muted: #1f2937;
+    --color-muted-foreground: #9ca3af;
+
+    --color-accent: #10b981;
+    --color-accent-foreground: #ffffff;
+
+    --color-destructive: #dc2626;
+    --color-destructive-foreground: #ffffff;
+
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+
+    --color-border: #1f2937;
+}
+
+/* BASE */
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-family: var(--font-display);
+    }
+}
+
+/* COMPONENTS */
+@layer components {
+    .finance-card {
+        @apply bg-card text-card-foreground border border-border rounded-xl p-6 shadow-sm transition-all duration-200 hover:shadow-md;
+    }
+
+    .stat-icon {
+        @apply flex h-10 w-10 items-center justify-center rounded-lg;
+    }
+}
