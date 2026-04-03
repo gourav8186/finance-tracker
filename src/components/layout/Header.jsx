@@ -43,7 +43,9 @@ const Header = ({ currentPage, onNavigate }) => {
               FD
             </span>
           </div>
-          <span className="text-lg font-semibold text-foreground">Finance</span>
+          <span className="hidden lg:block sm:block md:block text-lg font-semibold text-foreground">
+            Finance
+          </span>
         </div>
 
         {/* Desktop nav */}
