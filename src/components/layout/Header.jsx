@@ -35,7 +35,7 @@ const Header = ({ currentPage, onNavigate }) => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-full items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-full items-center justify-between px-4 sm:px-6 gap-2">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
