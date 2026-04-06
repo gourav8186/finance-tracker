@@ -1,22 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { mockTransactions } from '../data/mockData.js';
 
-// Load from localStorage or fallback
+// Load initial state from localStorage or mock data 
 const loadFromStorage = () => {
-    try {
-        const data = localStorage.getItem("finance_transactions");
-        return data ? JSON.parse(data) : mockTransactions;
-    } catch {
-        return mockTransactions;
-    }
-};
+    const stored = localStorage.getItem("transactions");
+    return stored ? JSON.parse(stored) : mockTransactions;
+}
 
-// Save to localStorage
-const saveToStorage = (transactions) => {
-    localStorage.setItem("finance_transactions", JSON.stringify(transactions))
-};
 
-// Initial state
 const initialState = {
     items: loadFromStorage(),
     searchQuery: "",
@@ -29,43 +20,52 @@ const transactionsSlice = createSlice({
     name: "transactions",
     initialState,
     reducers: {
-
-        // Add transaction
-        addTransaction(state, action) {
-            const id = Math.max(0, ...state.items.map((t) => t.id)) + 1;
-            state.items.push({ ...action.payload, id });
-            saveToStorage(state.items);
+        // Load data
+        setTransactions(state, action) {
+            state.items = action.payload;
         },
 
-        // Update transaction
+        // Add
+        addTransaction(state, action) {
+            const id =
+                state.items.length > 0
+                    ? Math.max(...state.items.map((t) => t.id)) + 1
+                    : 1;
+
+            state.items.push({ ...action.payload, id });
+        },
+
+        // Update
         updateTransaction(state, action) {
-            const idx = state.items.findIndex((t) => t.id === action.payload.id);
+            const idx = state.items.findIndex(
+                (t) => t.id === action.payload.id
+            );
             if (idx !== -1) {
                 state.items[idx] = action.payload;
-                saveToStorage(state.items);
             }
         },
 
-        // Delete transaction
+        // Delete
         deleteTransaction(state, action) {
-            state.items = state.items.filter((t) => t.id !== action.payload);
-            saveToStorage(state.items);
+            state.items = state.items.filter(
+                (t) => t.id !== action.payload
+            );
         },
 
-        // UI states
-        setSearchQuery: (state, action) => {
+        // UI state
+        setSearchQuery(state, action) {
             state.searchQuery = action.payload;
         },
 
-        setFilterType: (state, action) => {
+        setFilterType(state, action) {
             state.filterType = action.payload;
         },
 
-        setSortBy: (state, action) => {
+        setSortBy(state, action) {
             state.sortBy = action.payload;
         },
 
-        setSortOrder: (state, action) => {
+        setSortOrder(state, action) {
             state.sortOrder = action.payload;
         },
     },
@@ -75,6 +75,7 @@ export const {
     addTransaction,
     updateTransaction,
     deleteTransaction,
+    setTransactions,
     setSearchQuery,
     setFilterType,
     setSortBy,

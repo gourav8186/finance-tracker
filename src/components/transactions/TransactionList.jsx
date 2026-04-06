@@ -1,4 +1,7 @@
 import { useAppSelector, useAppDispatch } from "../../store/index.js";
+import { useEffect } from "react";
+import { setTransactions } from "../../store/transactionsSlice.js";
+import { mockTransactions } from "../../data/mockData.js";
 import {
   setSearchQuery,
   setFilterType,
@@ -14,8 +17,9 @@ import toast from "react-hot-toast";
 
 const TransactionList = () => {
   const dispatch = useAppDispatch();
+  const items = useAppSelector((s) => s.transactions.items);
   // Global state
-  const { items, searchQuery, filterType, sortBy, sortOrder } = useAppSelector(
+  const { searchQuery, filterType, sortBy, sortOrder } = useAppSelector(
     (s) => s.transactions,
   );
   const role = useAppSelector((s) => s.role.current);
@@ -24,6 +28,27 @@ const TransactionList = () => {
   // Local state
   const [editingTx, setEditingTx] = useState(null);
   const [showForm, setShowForm] = useState(false);
+
+  // Load data from localStorage or mock on mount
+  useEffect(() => {
+    try {
+      const data = localStorage.getItem("finance_transactions");
+
+      if (data && JSON.parse(data).length > 0) {
+        dispatch(setTransactions(JSON.parse(data)));
+      } else {
+        dispatch(setTransactions(mockTransactions));
+      }
+    } catch (err) {
+      console.error(err);
+      dispatch(setTransactions(mockTransactions));
+    }
+  }, [dispatch]);
+
+  // save to localStorage on transactions change
+  useEffect(() => {
+    localStorage.setItem("finance_transactions", JSON.stringify(items));
+  }, [items]);
 
   // Filter + search
   let filtered = items.filter((t) => {
